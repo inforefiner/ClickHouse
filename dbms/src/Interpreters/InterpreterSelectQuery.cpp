@@ -728,9 +728,10 @@ void InterpreterSelectQuery::executeFetchColumns(
             size_t next_req_column_pos = 0;
             for (size_t i = 0; i < required_columns.size(); ++i)
             {
-                if (physical_columns.count(required_columns[i]) && next_req_column_pos < i)
+                if (physical_columns.count(required_columns[i]))
                 {
-                    std::swap(required_columns[i], required_columns[next_req_column_pos]);
+                    if (next_req_column_pos < i)
+                        std::swap(required_columns[i], required_columns[next_req_column_pos]);
                     ++next_req_column_pos;
                 }
             }
